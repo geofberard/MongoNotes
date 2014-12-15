@@ -1,0 +1,49 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/core-ajax/core-ajax.html">
+<polymer-element name="post-service" attributes="posts">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+        <core-ajax id="ajax"
+                   auto
+                   url="/api/v1/notes"
+                   handleAs="json"
+                   response="{{posts}}">
+        </core-ajax>
+    </template>
+    <script>
+        Polymer('post-service', {
+            created: function () {
+                this.posts = [];
+            },
+            setImportant: function (id, isImportant) {
+                $.get('/api/v1/notes/set-important/' + id + '/' + isImportant);
+            },
+            deleteNote: function (id,posts) {
+                $.ajax({
+                    url: '/api/v1/notes/' + id,
+                    type: 'DELETE',
+                    success: function() {
+                        var i = posts.map(function(e) {return e.id}).indexOf(id);
+                        if (i != -1)
+                            posts.splice(i, 1); // deletes 1 element at the i'th element
+                    }
+                });
+
+            },
+            createNode: function (id,posts) {
+                $.ajax({
+                    url: '/api/v1/notes/' + id,
+                    type: 'POST',
+                    success: function() {
+
+                    }
+                });
+
+            }
+        });
+    </script>
+</polymer-element>

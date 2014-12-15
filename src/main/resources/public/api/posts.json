@@ -1,0 +1,8 @@
+{ "title" : "Web Components" , "text" : "Have you heard about the Web Components revolution?", "avatar" : "../images/avatar-01.svg", "important": false}
+{ "title" : "Polymer" , "text" : "Loving this Polymer thing.", "avatar" : "../images/avatar-02.svg", "important": false}
+{ "title" : "New year" , "text" : "So last year...", "avatar" : "../images/avatar-03.svg", "important": false}
+{ "title" : "Lecture proposition" , "text" : "Pretty sure I came up with that first.", "avatar" : "../images/avatar-07.svg", "important": false}
+{ "title" : "Nested Component" , "text" : "Yo, I heard you like components, so I put a component in your component.", "avatar" : "../images/avatar-08.svg", "favorite": false}
+{ "title" : "Centralization" , "text" : "Centralize, centrailize.", "avatar" : "../images/avatar-04.svg", "important": false}
+{ "title" : "Cat research" , "text" : "Has anyone seen my cat?", "avatar" : "../images/avatar-06.svg", "important": false}
+{ "title" : "Dcentralization" , "text" : "Decentralize!", "username" : "Norbert", "avatar" : "../images/avatar-05.svg", "important": false}

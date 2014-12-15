@@ -1,0 +1,99 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/core-icon-button/core-icon-button.html">
+
+<polymer-element name="post-card">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                background-color: white;
+                padding: 20px;
+                width: 100%;
+                font-size: 1.2rem;
+                font-weight: 300;
+            }
+
+            .card-header {
+                margin-bottom: 10px;
+            }
+
+            polyfill-next-selector {
+                content: '.card-header h2';
+            }
+
+            .card-header ::content h2 {
+                margin: 0;
+                font-size: 1.8rem;
+                font-weight: 300;
+            }
+
+            polyfill-next-selector {
+                content: '.card-header img';
+            }
+
+            .card-header ::content img {
+                width: 70px;
+                border-radius: 50%;
+                margin: 10px;
+            }
+
+            core-icon-button {
+                position: absolute;
+                color: #636363;
+            }
+
+            core-icon-button#favicon {
+                top: 3px;
+                right: 45px;
+            }
+
+            core-icon-button#delete {
+                top: 3px;
+                right: 3px;
+            }
+
+            :host([important]) core-icon-button#favicon {
+                color: #ffd76e;
+            }
+        </style>
+
+        <div class="card-header" layout horizontal center>
+
+            <content select="img"></content>
+            <content select="h2"></content>
+
+        </div>
+
+        <core-icon-button
+                id="favicon"
+                icon="star"
+                on-tap="{{importantTapped}}">
+        </core-icon-button>
+
+        <core-icon-button
+                id="delete"
+                icon="close"
+                on-tap="{{deleteTapped}}">
+        </core-icon-button>
+
+        <content></content>
+    </template>
+    <script>
+        Polymer({
+            publish: {
+                important: {
+                    value: false,
+                    reflect: true
+                }
+            },
+            importantTapped: function (event, detail, sender) {
+                this.important = !this.important;
+                this.fire('important-tap');
+            },
+            deleteTapped: function (event, detail, sender) {
+                this.fire('delete-tap');
+            }
+        });
+    </script>
+</polymer-element>
