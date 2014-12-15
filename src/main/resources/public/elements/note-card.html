@@ -1,7 +1,8 @@
 <link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="../components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../components/paper-shadow/paper-shadow.html">
 
-<polymer-element name="post-card">
+<polymer-element name="note-card" attributes="type">
     <template>
         <style>
             :host {
@@ -29,50 +30,81 @@
             }
 
             polyfill-next-selector {
-                content: '.card-header img';
+                content: '.card-header #note-type';
             }
 
-            .card-header ::content img {
-                width: 70px;
+            .card-header #note-type {
                 border-radius: 50%;
                 margin: 10px;
+                color: #ffffff;
             }
 
-            core-icon-button {
+            .card-header #note-type.theaters {
+                background-color: #CE5043;
+            }
+
+            .card-header #note-type.room {
+                background-color: #4CAF50;
+            }
+
+            .card-header #note-type.today {
+                background-color: #795548;
+            }
+
+            .card-header #note-type.description {
+                background-color: #3F51B5;
+            }
+
+            .card-header #note-type /deep/ core-icon {
+                height: 34px;
+                width: 34px;
+            }
+
+            .action-icon {
                 position: absolute;
                 color: #636363;
             }
 
-            core-icon-button#favicon {
+            .action-icon#favicon {
                 top: 3px;
                 right: 45px;
             }
 
-            core-icon-button#delete {
+            .action-icon#delete {
                 top: 3px;
                 right: 3px;
             }
 
-            :host([important]) core-icon-button#favicon {
-                color: #ffd76e;
+            :host .action-icon {
+                color: #BDBDBD;
+            }
+
+            :host([important]) .action-icon#favicon {
+                color: #F44336;
             }
         </style>
 
+        <paper-shadow z="2" animated="true"></paper-shadow>
+
         <div class="card-header" layout horizontal center>
-
-            <content select="img"></content>
+            <core-icon-button
+                    id="note-type"
+                    class="{{type}}"
+                    icon="{{type}}">
+            </core-icon-button>
             <content select="h2"></content>
-
         </div>
 
         <core-icon-button
                 id="favicon"
-                icon="star"
+                class="action-icon"
+                icon="flag"
                 on-tap="{{importantTapped}}">
         </core-icon-button>
 
         <core-icon-button
                 id="delete"
+                class="action-icon"
                 icon="close"
                 on-tap="{{deleteTapped}}">
         </core-icon-button>

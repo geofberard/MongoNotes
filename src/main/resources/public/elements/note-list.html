@@ -1,0 +1,65 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../note-service/note-service.html">
+<link rel="import" href="note-card.html">
+<link rel="import" href="new-note.html">
+
+<polymer-element name="note-list" attributes="show">
+    <template>
+        <style>
+            :host {
+                display: block;
+                width: 100%;
+            }
+
+            note-card, new-note{
+                margin-bottom: 30px;
+            }
+        </style>
+
+        <note-service id="service" notes="{{notes}}"></note-service>
+
+        <div layout vertical center>
+
+            <new-note
+                    on-create-tap="{{handleCreate}}"
+                    hidden?="{{!displayNew}}" ></new-note>
+
+            <template repeat="{{note in notes}}">
+                <note-card
+                        important="{{note.important}}"
+                        type="{{note.type}}"
+                        on-important-tap="{{handleImportant}}"
+                        on-delete-tap="{{handleDelete}}"
+                        hidden?="{{show == 'important' && !note.important}}">
+
+                <h2>{{note.title}}</h2>
+
+                <p>{{note.text}}</p>
+                </note-card>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            publish: {
+                displayNew: {
+                    value: false,
+                    reflect: true
+                }
+            },
+            handleImportant: function (event, detail, sender) {
+                var note = sender.templateInstance.model.note;
+                this.$.service.setImportant(note.id, note.important);
+            },
+            handleCreate: function (event, detail, sender) {
+                this.$.service.createNode(detail,this.notes);
+                this.displayNew = false;
+            },
+            handleDelete: function (event, detail, sender) {
+                var note = sender.templateInstance.model.note;
+                this.$.service.deleteNote(note.id,this.notes);
+            }
+        });
+    </script>
+</polymer-element>

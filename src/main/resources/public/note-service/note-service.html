@@ -1,6 +1,6 @@
 <link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="../components/core-ajax/core-ajax.html">
-<polymer-element name="post-service" attributes="posts">
+<polymer-element name="note-service" attributes="notes">
     <template>
         <style>
             :host {
@@ -11,35 +11,39 @@
                    auto
                    url="/api/v1/notes"
                    handleAs="json"
-                   response="{{posts}}">
+                   response="{{notes}}">
         </core-ajax>
     </template>
     <script>
-        Polymer('post-service', {
+        Polymer('note-service', {
             created: function () {
-                this.posts = [];
+                this.notes = [];
             },
             setImportant: function (id, isImportant) {
                 $.get('/api/v1/notes/set-important/' + id + '/' + isImportant);
             },
-            deleteNote: function (id,posts) {
+            deleteNote: function (id,notes) {
                 $.ajax({
                     url: '/api/v1/notes/' + id,
                     type: 'DELETE',
                     success: function() {
-                        var i = posts.map(function(e) {return e.id}).indexOf(id);
+                        var i = notes.map(function(e) {return e.id}).indexOf(id);
                         if (i != -1)
-                            posts.splice(i, 1); // deletes 1 element at the i'th element
+                            notes.splice(i, 1); // deletes 1 element at the i'th element
                     }
                 });
 
             },
-            createNode: function (id,posts) {
+            createNode: function (noteData,notes) {
                 $.ajax({
-                    url: '/api/v1/notes/' + id,
+                    url: '/api/v1/notes',
                     type: 'POST',
-                    success: function() {
-
+                    contentType: "application/json; charset=UTF-8",
+                    dataType: "json",
+                    data: JSON.stringify(noteData),
+                    success: function(newNote) {
+                        //notes.push(newNote);
+                        location.reload();
                     }
                 });
 

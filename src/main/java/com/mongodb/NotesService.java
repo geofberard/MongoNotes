@@ -1,5 +1,6 @@
 package com.mongodb;
 
+import com.google.gson.Gson;
 import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
@@ -46,11 +47,13 @@ public enum NotesService {
         return value != null ? new Note((BasicDBObject) value) : null;
     }
 
-    public Object create() {
-        notes.insert(new BasicDBObject(KEY_TITLE, "John")
-        .append(KEY_TEXT,"This is a test")
-        .append(KEY_AVATAR , "../images/avatar-08.svg"));
-        return true;
+    public Object create(String body) {
+        Note note = new Gson().fromJson(body, Note.class);
+        BasicDBObject document = new BasicDBObject(KEY_TITLE, note.getTitle())
+                .append(KEY_TEXT, note.getText())
+                .append(KEY_TYPE, note.getType());
+        notes.insert(document);
+        return find(document.getObjectId("_id").toString());
     }
 
     public Object delete(String uid) {
@@ -63,7 +66,7 @@ public enum NotesService {
         return find(uid);
     }
 
-    private DBObject buildNoteUidQuery(String uid){
+    private DBObject buildNoteUidQuery(String uid) {
         return QueryBuilder.start(KEY_ID).is(new ObjectId(uid)).get();
     }
 }

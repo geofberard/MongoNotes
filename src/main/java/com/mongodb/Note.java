@@ -10,20 +10,20 @@ public class Note {
     public static final String KEY_ID = "_id";
     public static final String KEY_TITLE = "title";
     public static final String KEY_TEXT = "text";
-    public static final String KEY_AVATAR = "avatar";
+    public static final String KEY_TYPE = "type";
     public static final String KEY_IMPORTANT = "important";
 
     private String id;
     private String title;
     private String text;
-    private String avatar;
+    private String type;
     private boolean important;
 
     public Note(BasicDBObject dbObject) {
         this.id = ((ObjectId) dbObject.get(KEY_ID)).toString();
         this.title = dbObject.getString(KEY_TITLE);
         this.text = dbObject.getString(KEY_TEXT);
-        this.avatar = dbObject.getString(KEY_AVATAR);
+        this.type = dbObject.getString(KEY_TYPE);
         this.important = dbObject.getBoolean(KEY_IMPORTANT);
     }
 
@@ -43,7 +43,7 @@ public class Note {
         return important;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getType() {
+        return type;
     }
 }

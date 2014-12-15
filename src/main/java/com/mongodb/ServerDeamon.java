@@ -16,9 +16,9 @@ public class ServerDeamon {
                 (request, response) -> NotesService.INSTANCE.findAll(),
                 new JsonTransformer());
 
-        post(API_CONTEXT + "/notes/", "application/json",
+        post(API_CONTEXT + "/notes", "application/json",
                 (request, response) -> {
-                    return NotesService.INSTANCE.create();
+                    return NotesService.INSTANCE.create(request.body());
                 },
                 new JsonTransformer());
 
