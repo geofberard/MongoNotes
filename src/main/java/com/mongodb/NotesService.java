@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.mongodb.Note.*;
@@ -32,12 +33,13 @@ public enum NotesService {
     }
 
     public List<Note> findAll() {
-        List<Note> documents = new ArrayList<>();
+        List<Note> documents = new ArrayList<Note>();
         DBCursor dbObjects = notes.find();
         while (dbObjects.hasNext()) {
             DBObject dbObject = dbObjects.next();
             documents.add(new Note((BasicDBObject) dbObject));
         }
+        documents.sort(Comparator.comparing(Note::getId).reversed());
         return documents;
     }
 

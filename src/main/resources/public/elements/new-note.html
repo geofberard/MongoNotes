@@ -32,8 +32,14 @@
 
         <form method="post" action="">
             <div>
-                <paper-input id="titleField" label="Title" tabindex="1"></paper-input>
-                <paper-input id="textField" label="Text" tabindex="2"></paper-input>
+                <select id="typeField">
+                    <option value="description">Book</option>
+                    <option value="today">Meeting</option>
+                    <option value="room">Location</option>
+                    <option value="theaters">Movie</option>
+                </select>
+                <paper-input id="titleField" label="Title" ></paper-input>
+                <paper-input id="textField" label="Text" ></paper-input>
                 <paper-button
                         raised=""
                         class="create-button"
@@ -47,7 +53,7 @@
     <script>
         Polymer({
             createTapped: function (event, detail, sender) {
-                this.fire('create-tap', {type: "room", title: this.$.titleField.value, text: this.$.textField.value});
+                this.fire('create-tap', {type: this.$.typeField.value, title: this.$.titleField.value, text: this.$.textField.value});
             }
         });
     </script>
