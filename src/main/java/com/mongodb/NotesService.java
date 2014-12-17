@@ -32,6 +32,12 @@ public enum NotesService {
         }
     }
 
+    /*
+    Get all notes from the database and map them to Note Object
+    hint:
+       - use find() of DBCollection and hasNext() and next() from DBCursor
+       - next() return a DBObject and note need a BasicDBObject, you can use a cast
+     */
     public List<Note> findAll() {
         List<Note> documents = new ArrayList<Note>();
         DBCursor dbObjects = notes.find();
@@ -49,6 +55,12 @@ public enum NotesService {
         return value != null ? new Note((BasicDBObject) value) : null;
     }
 
+    /*
+    Add a new document in the collection
+    hint:
+      - use insert() of DBCollection
+      - new Gson().fromJson(body, Note.class) to get a note object
+     */
     public Object create(String body) {
         Note note = new Gson().fromJson(body, Note.class);
         BasicDBObject document = new BasicDBObject(KEY_TITLE, note.getTitle())
@@ -58,13 +70,29 @@ public enum NotesService {
         return find(document.getObjectId("_id").toString());
     }
 
+    /*
+    Delete document in the collection, you must specify a query on _id {_id:...}
+    hint:
+      - use insert() of DBCollection
+      - you can create a query with BasicDBObject or with QueryBuilder
+      - you need to transform the String id to an ObjectId (new ObjectId(uid))
+     */
     public Object delete(String uid) {
         notes.remove(buildNoteUidQuery(uid));
         return true;
     }
 
+    /*
+    Update document in the collection, you must specify a query on _id {_id:...}
+    and a change {$set:....}
+    hint:
+      - use insert() of DBCollection
+      - you can create a query with BasicDBObject or with QueryBuilder
+      - you need to transform the String id to an ObjectId (new ObjectId(uid))
+     */
     public Note setImportant(String uid, boolean isFavorite) {
-        notes.update(buildNoteUidQuery(uid), new BasicDBObject("$set", new BasicDBObject(KEY_IMPORTANT, isFavorite)));
+        notes.update(buildNoteUidQuery(uid),
+                new BasicDBObject("$set", new BasicDBObject(KEY_IMPORTANT, isFavorite)));
         return find(uid);
     }
 

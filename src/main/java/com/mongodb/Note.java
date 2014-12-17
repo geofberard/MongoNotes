@@ -19,6 +19,22 @@ public class Note {
     private String type;
     private boolean important;
 
+    public Note(){
+        this.id = "";
+        this.title = "";
+        this.text = "";
+        this.type = "";
+        this.important = false;
+    }
+
+    public Note(String id, String title, String text, String type, boolean important) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.type = type;
+        this.important = important;
+    }
+
     public Note(BasicDBObject dbObject) {
         this.id = ((ObjectId) dbObject.get(KEY_ID)).toString();
         this.title = dbObject.getString(KEY_TITLE);
