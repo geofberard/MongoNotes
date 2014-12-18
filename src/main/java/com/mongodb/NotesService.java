@@ -62,12 +62,7 @@ public enum NotesService {
       - new Gson().fromJson(body, Note.class) to get a note object
      */
     public Object create(String body) {
-        Note note = new Gson().fromJson(body, Note.class);
-        BasicDBObject document = new BasicDBObject(KEY_TITLE, note.getTitle())
-                .append(KEY_TEXT, note.getText())
-                .append(KEY_TYPE, note.getType());
-        notes.insert(document);
-        return find(document.getObjectId("_id").toString());
+        return new Gson().fromJson(body, Note.class);
     }
 
     /*
