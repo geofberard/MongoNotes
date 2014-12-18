@@ -39,14 +39,7 @@ public enum NotesService {
        - next() return a DBObject and note need a BasicDBObject, you can use a cast
      */
     public List<Note> findAll() {
-        List<Note> documents = new ArrayList<Note>();
-        DBCursor dbObjects = notes.find();
-        while (dbObjects.hasNext()) {
-            DBObject dbObject = dbObjects.next();
-            documents.add(new Note((BasicDBObject) dbObject));
-        }
-        documents.sort(Comparator.comparing(Note::getId).reversed());
-        return documents;
+        return new ArrayList<Note>();
     }
 
     public Note find(String uid) {
