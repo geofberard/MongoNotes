@@ -50,7 +50,7 @@ public enum NotesService {
     }
 
     public Note find(String uid) {
-        DBCursor dbObjects = notes.find(buildNoteUidQuery(uid));
+        DBCursor dbObjects = notes.find(QueryBuilder.start(KEY_ID).is(new ObjectId(uid)).get());
         DBObject value = dbObjects.next();
         return value != null ? new Note((BasicDBObject) value) : null;
     }
@@ -78,7 +78,6 @@ public enum NotesService {
       - you need to transform the String id to an ObjectId (new ObjectId(uid))
      */
     public Object delete(String uid) {
-        notes.remove(buildNoteUidQuery(uid));
         return true;
     }
 
@@ -94,7 +93,4 @@ public enum NotesService {
         return new Note();
     }
 
-    private DBObject buildNoteUidQuery(String uid) {
-        return QueryBuilder.start(KEY_ID).is(new ObjectId(uid)).get();
-    }
 }
