@@ -91,9 +91,7 @@ public enum NotesService {
       - you need to transform the String id to an ObjectId (new ObjectId(uid))
      */
     public Note setImportant(String uid, boolean isFavorite) {
-        notes.update(buildNoteUidQuery(uid),
-                new BasicDBObject("$set", new BasicDBObject(KEY_IMPORTANT, isFavorite)));
-        return find(uid);
+        return new Note();
     }
 
     private DBObject buildNoteUidQuery(String uid) {
