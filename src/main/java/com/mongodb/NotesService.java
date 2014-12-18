@@ -20,16 +20,13 @@ public enum NotesService {
     public static final String COLLECTION_NAME = "notes";
     public static final String FIELD_UID = "uid";
 
-    private final DBCollection notes;
+    private DBCollection notes;
 
+    /*
+    Hint: From a MongoClient, call getDB() to get a DB object, then call getCollection() to get a DBCollection object
+    you can query
+     */
     private NotesService() {
-        try {
-            MongoClient client = new MongoClient();
-            DB dataBase = client.getDB(DATABASE_NAME);
-            notes = dataBase.getCollection(COLLECTION_NAME);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException("Error during service Initialization");
-        }
     }
 
     /*
@@ -40,12 +37,6 @@ public enum NotesService {
      */
     public List<Note> findAll() {
         return new ArrayList<Note>();
-    }
-
-    public Note find(String uid) {
-        DBCursor dbObjects = notes.find(QueryBuilder.start(KEY_ID).is(new ObjectId(uid)).get());
-        DBObject value = dbObjects.next();
-        return value != null ? new Note((BasicDBObject) value) : null;
     }
 
     /*
