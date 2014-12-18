@@ -6,7 +6,7 @@ import static spark.SparkBase.staticFileLocation;
 /**
  * Created by geoffreyberard on 18/11/2014.
  */
-public class ServerDaemon {
+public class NotesServer {
 
     private static final String API_CONTEXT = "/api/v1";
 
