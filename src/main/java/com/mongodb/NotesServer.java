@@ -1,7 +1,8 @@
 package com.mongodb;
 
 import static spark.Spark.*;
-import static spark.SparkBase.staticFileLocation;
+
+import spark.Spark;
 
 /**
  * Created by geoffreyberard on 18/11/2014.
@@ -11,7 +12,7 @@ public class NotesServer {
     private static final String API_CONTEXT = "/api/v1";
 
     public static void main(String[] args) {
-        staticFileLocation("/public");
+        Spark.staticFiles.location("/public");
         get(API_CONTEXT + "/notes", "application/json",
                 (request, response) -> NotesService.INSTANCE.findAll(),
                 new JsonTransformer());

@@ -23,13 +23,9 @@ public enum NotesService {
     private final DBCollection notes;
 
     private NotesService() {
-        try {
-            MongoClient client = new MongoClient();
-            DB dataBase = client.getDB(DATABASE_NAME);
-            notes = dataBase.getCollection(COLLECTION_NAME);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException("Error during service Initialization");
-        }
+        MongoClient client = new MongoClient();
+        DB dataBase = client.getDB(DATABASE_NAME);
+        notes = dataBase.getCollection(COLLECTION_NAME);
     }
 
     /*
